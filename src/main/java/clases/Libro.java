@@ -60,5 +60,19 @@ public class Libro {
 		this.paginas = paginas;
 	}
 	
+	public boolean equals (Object o) {
+		boolean b = false;
+		if (this == o) {
+			isbn.equals(o);
+			b = true;
+			
+		}else {
+			
+			b = false;
+		}	
+
+		return b;
+		
+	}
 
 }

@@ -28,7 +28,10 @@ public class Main {
 				break;
 			case 3:
 				// TODO Lista de Libros
-				eliminarLibro(catalogo, elemento);
+				eliminarLibro(catalogo/* , elemento */);
+				break;
+			case 4:
+				busquedaLibro(catalogo);
 				break;
 			default:
 				break;
@@ -89,41 +92,65 @@ public class Main {
 		for (int i = 0; i < catalogo.size(); i++) {
 			System.out.println("Libro " + (i + 1));
 			System.out.println("-------------");
-			System.out.println("Título: " + catalogo.get(i).getTitulo());
+			System.out.println("Tï¿½tulo: " + catalogo.get(i).getTitulo());
 			System.out.println("ISBN: " + catalogo.get(i).getIsbn());
-			System.out.println("Género: " + catalogo.get(i).getGenero());
+			System.out.println("Gï¿½nero: " + catalogo.get(i).getGenero());
 			System.out.println("Autor: " + catalogo.get(i).getAutor());
-			System.out.println("Páginas: " + catalogo.get(i).getPaginas());
+			System.out.println("Pï¿½ginas: " + catalogo.get(i).getPaginas());
 			System.out.println();
 
 		}
 
 //		troya:1234:novela:javi:1234
 //		IT:1234:Novela:King:1234
-//  	Marvel:5678:poesia:ironman:23
+//  	Marvel:5678:poesia:ironman:232
 	}
 
-	private static void eliminarLibro(ArrayList<Libro> catalogo, String elemento) {
+	private static void eliminarLibro(ArrayList<Libro> catalogo) {
 
 		System.out.println("Escribe el titulo del libro que desea eliminar");
 		Scanner teclado = new Scanner(System.in);
-		elemento = teclado.next();
+		int elemento = teclado.nextInt();
+		catalogo.remove(elemento);
 
-		if (elemento.equals(catalogo.get(0).getTitulo())) {
+	}
 
-			for (int i = 0; i < catalogo.size(); i++) {
-				catalogo.remove(i).getTitulo();
-//					catalogo.remove(i).getIsbn();
-//					catalogo.remove(i).getGenero();
-//					catalogo.remove(i).getAutor();
-//					catalogo.remove(i).getPaginas();
-				System.out.println("libro eliminado");
+	private static void busquedaLibro(ArrayList<Libro> catalogo) {
+		System.out.println("Escribe el isbn del libro que desea eliminar");
+		Scanner teclado = new Scanner(System.in);
+		String elemento = teclado.next();
 
-			}
+		if (elemento.equals(catalogo.get(1).getTitulo())) {
+
+			catalogo.indexOf(elemento);
+			System.out.println("libro encontrado");
+
 		} else {
 			System.out.println("Libro no encontrado");
 		}
 
+		// colection.sort(catalogo) compareto
+	}
+
+	public boolean equals (Object o) {
+		boolean b = false;
+		if (this == o) {
+			b = true;
+		}else {
+			
+			b = false;
+		}	
+
+		return b;
+		
+		/**
+		 * (this == o)
+		 * 
+		 * libro e = (libro  ) o;
+		 * titulo.equals(e.titulo);
+		 */
+		
+		
 	}
 
 	private static String obtenerDatosLibro() {
