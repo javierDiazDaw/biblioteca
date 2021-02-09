@@ -1,13 +1,13 @@
 package clases;
 
 public class Libro {
-	
+
 	private String titulo;
 	private String isbn;
 	private Genero genero;
 	private String autor;
 	private Integer paginas;
-	
+
 	public Libro(String titulo, String isbn, Genero genero, String autor, Integer paginas) {
 		this.titulo = titulo;
 		this.isbn = isbn;
@@ -15,9 +15,9 @@ public class Libro {
 		this.autor = autor;
 		this.paginas = paginas;
 	}
-	
+
 	public Libro() {
-		
+
 	}
 
 	public String getTitulo() {
@@ -59,20 +59,24 @@ public class Libro {
 	public void setPaginas(Integer paginas) {
 		this.paginas = paginas;
 	}
-	
-	public boolean equals (Object o) {
+
+	public boolean equals(Object o) {
+
+		Libro l = (Libro) o;
 		boolean b = false;
 		if (this == o) {
-			isbn.equals(o);
+
 			b = true;
-			
-		}else {
-			
-			b = false;
-		}	
+
+		} else {
+			if (this.isbn.equalsIgnoreCase(l.isbn)) {
+				b = true;
+			}
+
+		}
 
 		return b;
-		
+
 	}
 
 }

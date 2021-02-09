@@ -14,6 +14,7 @@ public class Main {
 
 		ArrayList<Libro> catalogo = new ArrayList<Libro>();
 		String elemento = null;
+		String isbn = "";
 		while (true) {
 			int opcion = menu();
 			switch (opcion) {
@@ -28,7 +29,7 @@ public class Main {
 				break;
 			case 3:
 				// TODO Lista de Libros
-				eliminarLibro(catalogo/* , elemento */);
+				eliminarLibro(catalogo);
 				break;
 			case 4:
 				busquedaLibro(catalogo);
@@ -116,43 +117,31 @@ public class Main {
 	}
 
 	private static void busquedaLibro(ArrayList<Libro> catalogo) {
-		System.out.println("Escribe el isbn del libro que desea eliminar");
+		String isbn = "";
+		System.out.println("Escribe el isbn del libro que desea buscar");
 		Scanner teclado = new Scanner(System.in);
-		String elemento = teclado.next();
+		isbn = teclado.next();
 
-		if (elemento.equals(catalogo.get(1).getTitulo())) {
-
-			catalogo.indexOf(elemento);
-			System.out.println("libro encontrado");
-
-		} else {
-			System.out.println("Libro no encontrado");
+		Libro l = new Libro();
+		l.setIsbn(isbn);
+		
+		int posicion = 0;
+		posicion = catalogo.indexOf(1);
+		if (posicion<0) {
+			System.out.println("El libro no está agregado en el catalogo");
+		}else {
+			System.out.println(catalogo.get(posicion));
 		}
-
+			
+		
 		// colection.sort(catalogo) compareto
 	}
 
-	public boolean equals (Object o) {
-		boolean b = false;
-		if (this == o) {
-			b = true;
-		}else {
-			
-			b = false;
-		}	
-
-		return b;
-		
-		/**
-		 * (this == o)
-		 * 
-		 * libro e = (libro  ) o;
-		 * titulo.equals(e.titulo);
-		 */
+	
 		
 		
-	}
-
+		
+	
 	private static String obtenerDatosLibro() {
 		String datos = null;
 
