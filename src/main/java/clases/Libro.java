@@ -60,6 +60,11 @@ public class Libro {
 		this.paginas = paginas;
 	}
 
+	@Override
+	public String toString() {
+		return "Titulo " + titulo + "\nISBN " + isbn + "\nGenero " + genero + "\nAutor " + autor + "\nPaginas " + paginas;
+	}
+
 	public boolean equals(Object o) {
 
 		Libro l = (Libro) o;

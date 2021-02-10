@@ -50,9 +50,11 @@ public class Main {
 			System.out.println("3. Baja de Libros");
 			System.out.println("4. Busqueda de Libros");
 			System.out.println("5. Ordenacion de Libros");
+			System.out.println("6. Guardarlo en ficheros");
+			System.out.println("7. Vaciar catalogo");
 			System.out.println("Introduce la opcion:");
 
-			opcion = leerOpcion(5);
+			opcion = leerOpcion(7);
 
 		} while (opcion <= 0);
 
@@ -93,11 +95,11 @@ public class Main {
 		for (int i = 0; i < catalogo.size(); i++) {
 			System.out.println("Libro " + (i + 1));
 			System.out.println("-------------");
-			System.out.println("Tï¿½tulo: " + catalogo.get(i).getTitulo());
+			System.out.println("Titulo: " + catalogo.get(i).getTitulo());
 			System.out.println("ISBN: " + catalogo.get(i).getIsbn());
-			System.out.println("Gï¿½nero: " + catalogo.get(i).getGenero());
+			System.out.println("Genero: " + catalogo.get(i).getGenero());
 			System.out.println("Autor: " + catalogo.get(i).getAutor());
-			System.out.println("Pï¿½ginas: " + catalogo.get(i).getPaginas());
+			System.out.println("Paginas: " + catalogo.get(i).getPaginas());
 			System.out.println();
 
 		}
@@ -126,10 +128,11 @@ public class Main {
 		l.setIsbn(isbn);
 		
 		int posicion = 0;
-		posicion = catalogo.indexOf(1);
+		posicion = catalogo.indexOf(l);
 		if (posicion<0) {
-			System.out.println("El libro no está agregado en el catalogo");
+			System.out.println("El libro no esta agregado en el catalogo");
 		}else {
+			System.out.println("Libro encontrado");
 			System.out.println(catalogo.get(posicion));
 		}
 			
