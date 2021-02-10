@@ -4,6 +4,7 @@
 package clases;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -33,6 +34,9 @@ public class Main {
 				break;
 			case 4:
 				busquedaLibro(catalogo);
+				break;
+			case 5:
+				ordenaLibro(catalogo);
 				break;
 			default:
 				break;
@@ -126,25 +130,35 @@ public class Main {
 
 		Libro l = new Libro();
 		l.setIsbn(isbn);
-		
+
 		int posicion = 0;
 		posicion = catalogo.indexOf(l);
-		if (posicion<0) {
+		if (posicion < 0) {
 			System.out.println("El libro no esta agregado en el catalogo");
-		}else {
+		} else {
 			System.out.println("Libro encontrado");
 			System.out.println(catalogo.get(posicion));
 		}
-			
-		
-		// colection.sort(catalogo) compareto
+
 	}
 
-	
+	private static void ordenaLibro(ArrayList<Libro> catalogo) {
+		// TODO Auto-generated method stub
+
+		// colection.sort(catalogo);
+		Collections.sort(catalogo);
+
+		for (int i = 0; i < catalogo.size(); i++) {
+			System.out.println("lista ordenada por titulo: ");
+			System.out.println("Libro " + (i+1));
+			System.out.println("-------------");
+			System.out.println(catalogo);
+			System.out.println();
+		}
 		
-		
-		
-	
+
+	}
+
 	private static String obtenerDatosLibro() {
 		String datos = null;
 

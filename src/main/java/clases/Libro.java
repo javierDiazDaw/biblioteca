@@ -1,6 +1,6 @@
 package clases;
 
-public class Libro {
+public class Libro implements Comparable<Libro> {
 
 	private String titulo;
 	private String isbn;
@@ -62,7 +62,9 @@ public class Libro {
 
 	@Override
 	public String toString() {
-		return "Titulo " + titulo + "\nISBN " + isbn + "\nGenero " + genero + "\nAutor " + autor + "\nPaginas " + paginas;
+		return "Titulo: " + titulo + "\nISBN: " + isbn + "\nGenero: " + genero + "\nAutor: " + autor + "\nPaginas: "
+				+ paginas + "\n";
+
 	}
 
 	public boolean equals(Object o) {
@@ -82,6 +84,11 @@ public class Libro {
 
 		return b;
 
+	}
+
+	@Override
+	public int compareTo(Libro o) {
+		return this.titulo.compareTo(o.titulo);
 	}
 
 }
