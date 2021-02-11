@@ -3,6 +3,12 @@
  */
 package clases;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
@@ -11,7 +17,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		ArrayList<Libro> catalogo = new ArrayList<Libro>();
 		String elemento = null;
@@ -37,6 +43,9 @@ public class Main {
 				break;
 			case 5:
 				ordenaLibro(catalogo);
+				break;
+			case 6:
+				crearFichero(catalogo);
 				break;
 			default:
 				break;
@@ -145,16 +154,10 @@ public class Main {
 	private static void ordenaLibro(ArrayList<Libro> catalogo) {
 		// TODO Auto-generated method stub
 
-		// colection.sort(catalogo);
+		
 		Collections.sort(catalogo);
+		System.out.println("Catalogo ordenado");
 
-		for (int i = 0; i < catalogo.size(); i++) {
-			System.out.println("lista ordenada por titulo: ");
-			System.out.println("Libro " + (i+1));
-			System.out.println("-------------");
-			System.out.println(catalogo);
-			System.out.println();
-		}
 		
 
 	}
@@ -177,6 +180,57 @@ public class Main {
 
 		return datos;
 	}
+	
+	private static void crearFichero (ArrayList<Libro> catalogo) throws IOException {
+		
+		try {
+		      FileWriter myWriter = new FileWriter("ACatalogo.txt");
+		      myWriter.write(catalogo);
+		      myWriter.close();
+		      System.out.println("El catalogo esta escrito en el fichero");
+		    } catch (IOException e) {
+		      System.out.println("accion erronea");
+		      e.printStackTrace();
+		    }
+		
+		/**
+		 * el write solo lo lee a traves de strings, no se puede con arraylist.
+		 * hay que crear toString para devolverme un libro en cada cadena. se debe crerar un bucle con for each
+		 * for(Libro l :catalogo){
+		 * write(l._______());
+		 * }
+		 */
+		
+		 try {
+		      File myObj = new File("ACatalogo.txt");
+		      Scanner myReader = new Scanner(myObj);
+		      while (myReader.hasNextLine()) {
+		        String data = myReader.nextLine();
+		        System.out.println(data);
+		      }
+		      myReader.close();
+		    } catch (FileNotFoundException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+		 File myObj = new File("ACatalogo.txt");
+		 if (myObj.exists()) {
+		      System.out.println("File name: " + myObj.getName());
+		      System.out.println("Absolute path: " + myObj.getAbsolutePath());
+		      System.out.println("Writeable: " + myObj.canWrite());
+		      System.out.println("Readable " + myObj.canRead());
+		      System.out.println("File size in bytes " + myObj.length());
+		    } else {
+		      System.out.println("The file does not exist.");
+		    }
+		
+		
+		
+//		File archivoCatalogo = new File ("C:\\archivoCatalogo.txt");
+//		FileReader fr = new FileReader (archivoCatalogo);
+//		BufferedReader br = new BufferedReader(fr);
+//		String linea = br.readLine();
+		}
 
 	private static Libro procesaEntrada(String entrada) {
 		Libro libro = null;

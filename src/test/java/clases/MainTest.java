@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -49,7 +50,7 @@ class MainTest {
 	/**
 	 * toString
 	 */
-	void test01() {
+	void test01() throws IOException {
 		//Scanner lectorSalida = new Scanner(salida);
 		Main.main(null);
 		assertEquals("Hola Mundo", outputStreamCaptor.toString().trim()/*lectorSalida.nextLine()*/);
