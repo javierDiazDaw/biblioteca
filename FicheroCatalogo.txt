@@ -1,0 +1,1 @@
+Titulo: La musa, ISBN: 1234, Genero: NOVELA, Autor: Jorge, Paginas: 30000

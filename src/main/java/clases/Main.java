@@ -101,26 +101,30 @@ public class Main {
 
 	private static void mostrarLibro(ArrayList<Libro> catalogo) {
 
-//		for (Libro l : catalogo) {
-//			System.out.println(l);
-//		}
+		//Metodo For Each
+		
+		for (Libro l : catalogo) {
+			System.out.println(l);
+		}
 
-		for (int i = 0; i < catalogo.size(); i++) {
-			System.out.println("Libro " + (i + 1));
-			System.out.println("-------------");
-			System.out.println("Titulo: " + catalogo.get(i).getTitulo());
-			System.out.println("ISBN: " + catalogo.get(i).getIsbn());
-			System.out.println("Genero: " + catalogo.get(i).getGenero());
-			System.out.println("Autor: " + catalogo.get(i).getAutor());
-			System.out.println("Paginas: " + catalogo.get(i).getPaginas());
-			System.out.println();
+		//Metodo bucle con size 
+		
+//		for (int i = 0; i < catalogo.size(); i++) {
+//			System.out.println("Libro " + (i + 1));
+//			System.out.println("-------------");
+//			System.out.println("Titulo: " + catalogo.get(i).getTitulo());
+//			System.out.println("ISBN: " + catalogo.get(i).getIsbn());
+//			System.out.println("Genero: " + catalogo.get(i).getGenero());
+//			System.out.println("Autor: " + catalogo.get(i).getAutor());
+//			System.out.println("Paginas: " + catalogo.get(i).getPaginas());
+//			System.out.println();
 
 		}
 
 //		troya:1234:novela:javi:1234
 //		IT:1234:Novela:King:1234
 //  	Marvel:5678:poesia:ironman:232
-	}
+	
 
 	private static void eliminarLibro(ArrayList<Libro> catalogo) {
 
@@ -184,14 +188,27 @@ public class Main {
 	private static void crearFichero (ArrayList<Libro> catalogo) throws IOException {
 		
 		try {
-		      FileWriter myWriter = new FileWriter("ACatalogo.txt");
-		      myWriter.write(catalogo);
-		      myWriter.close();
-		      System.out.println("El catalogo esta escrito en el fichero");
-		    } catch (IOException e) {
-		      System.out.println("accion erronea");
-		      e.printStackTrace();
-		    }
+  	      FileWriter escribeFichero = new FileWriter("FicheroCatalogo.txt");
+  	      for(Libro l : catalogo) {
+  	    	  escribeFichero.write(l.toStringFile());
+  	    	  System.out.println("El catágolo se ha guardado en el fichero");
+  	      }
+  	      escribeFichero.close();
+  	    } catch (IOException e) {
+  	      System.out.println("Se ha producido un error, vuelva a intentarlo");
+  	      e.printStackTrace();
+  	    }
+
+		
+//		try {
+//		      FileWriter myWriter = new FileWriter("ACatalogo.txt");
+//		      myWriter.write(catalogo);
+//		      myWriter.close();
+//		      System.out.println("El catalogo esta escrito en el fichero");
+//		    } catch (IOException e) {
+//		      System.out.println("accion erronea");
+//		      e.printStackTrace();
+//		    }
 		
 		/**
 		 * el write solo lo lee a traves de strings, no se puede con arraylist.
@@ -201,28 +218,28 @@ public class Main {
 		 * }
 		 */
 		
-		 try {
-		      File myObj = new File("ACatalogo.txt");
-		      Scanner myReader = new Scanner(myObj);
-		      while (myReader.hasNextLine()) {
-		        String data = myReader.nextLine();
-		        System.out.println(data);
-		      }
-		      myReader.close();
-		    } catch (FileNotFoundException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
-		    }
-		 File myObj = new File("ACatalogo.txt");
-		 if (myObj.exists()) {
-		      System.out.println("File name: " + myObj.getName());
-		      System.out.println("Absolute path: " + myObj.getAbsolutePath());
-		      System.out.println("Writeable: " + myObj.canWrite());
-		      System.out.println("Readable " + myObj.canRead());
-		      System.out.println("File size in bytes " + myObj.length());
-		    } else {
-		      System.out.println("The file does not exist.");
-		    }
+//		 try {
+//		      File myObj = new File("ACatalogo.txt");
+//		      Scanner myReader = new Scanner(myObj);
+//		      while (myReader.hasNextLine()) {
+//		        String data = myReader.nextLine();
+//		        System.out.println(data);
+//		      }
+//		      myReader.close();
+//		    } catch (FileNotFoundException e) {
+//		      System.out.println("An error occurred.");
+//		      e.printStackTrace();
+//		    }
+//		 File myObj = new File("ACatalogo.txt");
+//		 if (myObj.exists()) {
+//		      System.out.println("File name: " + myObj.getName());
+//		      System.out.println("Absolute path: " + myObj.getAbsolutePath());
+//		      System.out.println("Writeable: " + myObj.canWrite());
+//		      System.out.println("Readable " + myObj.canRead());
+//		      System.out.println("File size in bytes " + myObj.length());
+//		    } else {
+//		      System.out.println("The file does not exist.");
+//		    }
 		
 		
 		
@@ -231,6 +248,11 @@ public class Main {
 //		BufferedReader br = new BufferedReader(fr);
 //		String linea = br.readLine();
 		}
+	
+	private static void vaciarCatalogo(ArrayList<Libro> catalogo) {
+		catalogo.clear();
+		System.out.println("Catalogo vacio");
+	}
 
 	private static Libro procesaEntrada(String entrada) {
 		Libro libro = null;
