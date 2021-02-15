@@ -47,6 +47,9 @@ public class Main {
 			case 6:
 				crearFichero(catalogo);
 				break;
+			case 7:
+				vaciarCatalogo(catalogo);
+				break;
 			default:
 				break;
 			}
@@ -63,7 +66,7 @@ public class Main {
 			System.out.println("3. Baja de Libros");
 			System.out.println("4. Busqueda de Libros");
 			System.out.println("5. Ordenacion de Libros");
-			System.out.println("6. Guardarlo en ficheros");
+			System.out.println("6. Guardar catalogo en fichero");
 			System.out.println("7. Vaciar catalogo");
 			System.out.println("Introduce la opcion:");
 
@@ -99,73 +102,6 @@ public class Main {
 		// Meter el libro en el catalogo
 	}
 
-	private static void mostrarLibro(ArrayList<Libro> catalogo) {
-
-		//Metodo For Each
-		
-		for (Libro l : catalogo) {
-			System.out.println(l);
-		}
-
-		//Metodo bucle con size 
-		
-//		for (int i = 0; i < catalogo.size(); i++) {
-//			System.out.println("Libro " + (i + 1));
-//			System.out.println("-------------");
-//			System.out.println("Titulo: " + catalogo.get(i).getTitulo());
-//			System.out.println("ISBN: " + catalogo.get(i).getIsbn());
-//			System.out.println("Genero: " + catalogo.get(i).getGenero());
-//			System.out.println("Autor: " + catalogo.get(i).getAutor());
-//			System.out.println("Paginas: " + catalogo.get(i).getPaginas());
-//			System.out.println();
-
-		}
-
-//		troya:1234:novela:javi:1234
-//		IT:1234:Novela:King:1234
-//  	Marvel:5678:poesia:ironman:232
-	
-
-	private static void eliminarLibro(ArrayList<Libro> catalogo) {
-
-		System.out.println("Escribe el titulo del libro que desea eliminar");
-		Scanner teclado = new Scanner(System.in);
-		int elemento = teclado.nextInt();
-		catalogo.remove(elemento);
-
-	}
-
-	private static void busquedaLibro(ArrayList<Libro> catalogo) {
-		String isbn = "";
-		System.out.println("Escribe el isbn del libro que desea buscar");
-		Scanner teclado = new Scanner(System.in);
-		isbn = teclado.next();
-
-		Libro l = new Libro();
-		l.setIsbn(isbn);
-
-		int posicion = 0;
-		posicion = catalogo.indexOf(l);
-		if (posicion < 0) {
-			System.out.println("El libro no esta agregado en el catalogo");
-		} else {
-			System.out.println("Libro encontrado");
-			System.out.println(catalogo.get(posicion));
-		}
-
-	}
-
-	private static void ordenaLibro(ArrayList<Libro> catalogo) {
-		// TODO Auto-generated method stub
-
-		
-		Collections.sort(catalogo);
-		System.out.println("Catalogo ordenado");
-
-		
-
-	}
-
 	private static String obtenerDatosLibro() {
 		String datos = null;
 
@@ -184,22 +120,131 @@ public class Main {
 
 		return datos;
 	}
-	
-	private static void crearFichero (ArrayList<Libro> catalogo) throws IOException {
-		
-		try {
-  	      FileWriter escribeFichero = new FileWriter("FicheroCatalogo.txt");
-  	      for(Libro l : catalogo) {
-  	    	  escribeFichero.write(l.toStringFile());
-  	    	  System.out.println("El catágolo se ha guardado en el fichero");
-  	      }
-  	      escribeFichero.close();
-  	    } catch (IOException e) {
-  	      System.out.println("Se ha producido un error, vuelva a intentarlo");
-  	      e.printStackTrace();
-  	    }
 
-		
+	private static String leerCadena() {
+		String opcion = null;
+		Scanner teclado = new Scanner(System.in);
+		opcion = teclado.nextLine();
+		return opcion;
+	}
+
+	private static void mostrarLibro(ArrayList<Libro> catalogo) {
+
+		// Metodo For Each
+
+		for (Libro l : catalogo) {
+			System.out.println(l.toString());
+		}
+
+		// Metodo bucle con size
+
+//		for (int i = 0; i < catalogo.size(); i++) {
+//			System.out.println("Libro " + (i + 1));
+//			System.out.println("-------------");
+//			System.out.println("Titulo: " + catalogo.get(i).getTitulo());
+//			System.out.println("ISBN: " + catalogo.get(i).getIsbn());
+//			System.out.println("Genero: " + catalogo.get(i).getGenero());
+//			System.out.println("Autor: " + catalogo.get(i).getAutor());
+//			System.out.println("Paginas: " + catalogo.get(i).getPaginas());
+//			System.out.println();
+
+	}
+
+//		troya:1234:novela:javi:1234
+//		IT:1234:Novela:King:1234
+//  	Marvel:5678:poesia:ironman:232
+
+	private static void eliminarLibro(ArrayList<Libro> catalogo) {
+
+		System.out.println("Escribe el titulo del libro que desea eliminar");
+		Scanner teclado = new Scanner(System.in);
+		int elemento = teclado.nextInt();
+		catalogo.remove(elemento);
+
+	}
+
+	private static void busquedaLibro(ArrayList<Libro> catalogo) {
+		String elegir;
+		String isbn = "";
+		String titulo = "";
+
+//		System.out.println("Buscar por titulo o por ISBN");
+//		Scanner teclado = new Scanner(System.in);
+//		elegir = teclado.next();
+//		if (elegir.equals("isbn")) {
+//			System.out.println("Escribe el isbn del libro que desea buscar");
+//			isbn = teclado.next();
+
+		Libro l = new Libro();
+		l.setIsbn(isbn);
+
+		int posicion = 0;
+		posicion = catalogo.indexOf(l);
+		if (posicion < 0) {
+			System.out.println("El libro no esta agregado en el catalogo");
+		} else {
+			System.out.println("Libro encontrado");
+			System.out.println(catalogo.get(posicion));
+		}
+
+	}
+//	}
+//		if (elegir.equals("titulo")) {
+//			System.out.println("Escribe el titulo del libro que desea buscar");
+//			titulo = teclado.next();
+//
+//			Libro l = new Libro();
+//			l.setTitulo(titulo);
+//
+//			int posicion = 0;
+//			posicion = catalogo.indexOf(l);
+//			if (posicion < 0) {
+//				System.out.println("El libro no esta agregado en el catalogo");
+//			} else {
+//				System.out.println("Libro encontrado");
+//				System.out.println(catalogo.get(posicion));
+//			}
+//		}
+//
+//	}
+
+	private static void ordenaLibro(ArrayList<Libro> catalogo) {
+		// TODO Auto-generated method stub
+		int elegir = 0;
+
+		do {
+			System.out.println("Elige una opcion para ordenar el catalogo:\n" + "1. Titulo \n2. Numero de Paginas");
+			Scanner teclado = new Scanner(System.in);
+			elegir = teclado.nextInt();
+
+			if (elegir == 1) {
+				Collections.sort(catalogo);
+				System.out.println("Catalogo ordenado por titulo");
+				System.out.println("Compruebelo en la seccion \"Lista de libros\"");
+			} else {
+				Collections.sort(catalogo, new compararPorIsbn());
+				System.out.println("Catalogo ordenado por numero de paginas");
+				System.out.println("Compruebelo en la seccion \"Lista de libros\"");
+			}
+		} while (elegir < 1 && elegir > 2);
+
+	}
+
+	private static void crearFichero(ArrayList<Libro> catalogo) throws IOException {
+
+		try {
+			FileWriter escribeFichero = new FileWriter("FicheroCatalogo.txt");
+			for (Libro l : catalogo) {
+				escribeFichero.write(l.toStringFile());
+
+			}
+			System.out.println("El catágolo se ha guardado en el fichero");
+			escribeFichero.close();
+		} catch (IOException e) {
+			System.out.println("Se ha producido un error, vuelva a intentarlo");
+			e.printStackTrace();
+		}
+
 //		try {
 //		      FileWriter myWriter = new FileWriter("ACatalogo.txt");
 //		      myWriter.write(catalogo);
@@ -209,15 +254,13 @@ public class Main {
 //		      System.out.println("accion erronea");
 //		      e.printStackTrace();
 //		    }
-		
+
 		/**
-		 * el write solo lo lee a traves de strings, no se puede con arraylist.
-		 * hay que crear toString para devolverme un libro en cada cadena. se debe crerar un bucle con for each
-		 * for(Libro l :catalogo){
-		 * write(l._______());
-		 * }
+		 * el write solo lo lee a traves de strings, no se puede con arraylist. hay que
+		 * crear toString para devolverme un libro en cada cadena. se debe crerar un
+		 * bucle con for each for(Libro l :catalogo){ write(l._______()); }
 		 */
-		
+
 //		 try {
 //		      File myObj = new File("ACatalogo.txt");
 //		      Scanner myReader = new Scanner(myObj);
@@ -240,15 +283,13 @@ public class Main {
 //		    } else {
 //		      System.out.println("The file does not exist.");
 //		    }
-		
-		
-		
+
 //		File archivoCatalogo = new File ("C:\\archivoCatalogo.txt");
 //		FileReader fr = new FileReader (archivoCatalogo);
 //		BufferedReader br = new BufferedReader(fr);
 //		String linea = br.readLine();
-		}
-	
+	}
+
 	private static void vaciarCatalogo(ArrayList<Libro> catalogo) {
 		catalogo.clear();
 		System.out.println("Catalogo vacio");
@@ -268,12 +309,5 @@ public class Main {
 		libro = new Libro(titulo, isbn, genero, autor, paginas);
 
 		return libro;
-	}
-
-	private static String leerCadena() {
-		String opcion = null;
-		Scanner teclado = new Scanner(System.in);
-		opcion = teclado.nextLine();
-		return opcion;
 	}
 }
