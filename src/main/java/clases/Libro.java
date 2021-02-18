@@ -69,11 +69,9 @@ public class Libro implements Comparable<Libro> {
 
 	}
 	
-	
 	public String toStringFile() {
 		return "Titulo: " + titulo + ", ISBN: " + isbn + ", Genero: " + genero + ", Autor: " + autor + ", Paginas: "
 				+ paginas + "\n";
-
 	}
 
 	public boolean equals(Object o) {
