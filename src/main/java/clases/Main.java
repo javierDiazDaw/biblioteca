@@ -26,16 +26,13 @@ public class Main {
 			int opcion = menu();
 			switch (opcion) {
 			case 1:
-				// TODO Alta de Libro
-				// titulo:isbn:genero:autor:paginas
 				alta(catalogo);
+
 				break;
 			case 2:
-				// TODO Lista de Libros
 				mostrarLibro(catalogo);
 				break;
 			case 3:
-				// TODO Lista de Libros
 				eliminarLibro(catalogo);
 				break;
 			case 4:
@@ -45,9 +42,12 @@ public class Main {
 				ordenaLibro(catalogo);
 				break;
 			case 6:
-				crearFichero(catalogo);
+				guardarFichero(catalogo);
 				break;
 			case 7:
+				cargarFichero(catalogo);
+				break;
+			case 8:
 				vaciarCatalogo(catalogo);
 				break;
 			default:
@@ -67,10 +67,11 @@ public class Main {
 			System.out.println("4. Busqueda de Libros");
 			System.out.println("5. Ordenacion de Libros");
 			System.out.println("6. Guardar catalogo en fichero");
-			System.out.println("7. Vaciar catalogo");
+			System.out.println("7. Cargar catalogo en fichero");
+			System.out.println("8. Vaciar catalogo");
 			System.out.println("Introduce la opcion:");
 
-			opcion = leerOpcion(7);
+			opcion = leerOpcion(8);
 
 		} while (opcion <= 0);
 
@@ -84,6 +85,7 @@ public class Main {
 			opcion = teclado.nextInt();
 			if (opcion > max)
 				opcion = -1;
+
 		} catch (InputMismatchException e) {
 			System.out.println("Opcion incorrecta");
 		}
@@ -109,6 +111,7 @@ public class Main {
 		while (!validado) {
 			System.out.println("Introduce los datos de un libro.");
 			System.out.println("Usa el formato \"titulo:isbn:genero:autor:paginas\"");
+			System.out.println("El ISBN debe empezar por 978 o 979");
 			try {
 				datos = leerCadena();
 				if (true)// Supongo de momento que valida siempre
@@ -125,7 +128,66 @@ public class Main {
 		String opcion = null;
 		Scanner teclado = new Scanner(System.in);
 		opcion = teclado.nextLine();
+
 		return opcion;
+	}
+
+	private static Libro procesaEntrada(String entrada) {
+		Libro libro = null;
+
+		String[] datos = entrada.split(":");
+
+		String titulo = datos[0];
+		String isbn = datos[1];
+		validarISBN13(datos[1]);
+		Genero genero = Genero.getGenero(datos[2]);
+		validarGenero(datos[2]);
+		String autor = datos[3];
+		Integer paginas = Integer.parseInt(datos[4]);
+		validarPaginas(datos[4]);
+
+		libro = new Libro(titulo, isbn, genero, autor, paginas);
+
+		return libro;
+	}
+
+	/**
+	 * Valida si una cadena es un ISBN de 13 digitos
+	 *
+	 * @param ISBN String que contiene el valor a validar
+	 * @return True = es un usuario de twitter
+	 */
+	public static void validarISBN13(String isbn) {
+
+		if (isbn.matches("^(978|979)[0-9]{10}$") != true) {
+			System.out.println("ISBN incorrecto");
+		} else {
+			isbn.matches("^(978|979)[0-9]{10}$");
+			System.out.println("ISBN correcto");
+		}
+
+	}
+
+	public static void validarGenero(String genero) {
+
+		if (genero.matches("^(novela|NOVELA|poesia|POESIA|ficcion|FICCION)$") != true) {
+			System.out.println("genero incorrecto");
+		} else {
+			genero.matches("^(novela|NOVELA|poesia|POESIA|ficcion|FICCION)$");
+			System.out.println("genero correcto");
+		}
+
+	}
+
+	public static void validarPaginas(String paginas) {
+
+		if (paginas.matches("^[0-9]+$") != true) {
+			System.out.println("paginas incorrectas");
+		} else {
+			paginas.matches("^[0-9]+$");
+			System.out.println("paginas correctas");
+		}
+
 	}
 
 	private static void mostrarLibro(ArrayList<Libro> catalogo) {
@@ -150,9 +212,10 @@ public class Main {
 
 	}
 
-//		troya:1234:novela:javi:1234
-//		IT:1234:Novela:King:1234
-//  	Marvel:5678:poesia:ironman:232
+//		IT:9781231231234:novela:Stephen King:1300
+//		La isla del tesoro:9781869345867:ficcion:Pedro:200
+//		Platero y yo:9781276849034:poesia:Juan Ramon Jimenez:150
+//		
 
 	private static void eliminarLibro(ArrayList<Libro> catalogo) {
 
@@ -230,10 +293,16 @@ public class Main {
 
 	}
 
-	private static void crearFichero(ArrayList<Libro> catalogo) throws IOException {
+	private static void guardarFichero(ArrayList<Libro> catalogo) throws IOException {
+
+		Scanner teclado = new Scanner(System.in);
+		String nombreFichero = "";
+
+		System.out.println("¿Como se llama el fichero a guardar?");
+		nombreFichero = teclado.next();
 
 		try {
-			FileWriter escribeFichero = new FileWriter("FicheroCatalogo.txt");
+			FileWriter escribeFichero = new FileWriter(nombreFichero);
 			for (Libro l : catalogo) {
 				escribeFichero.write(l.toStringFile());
 
@@ -241,19 +310,9 @@ public class Main {
 			System.out.println("El catágolo se ha guardado en el fichero");
 			escribeFichero.close();
 		} catch (IOException e) {
-			System.out.println("Se ha producido un error, vuelva a intentarlo");
+			System.out.println("Error en el fichero");
 			e.printStackTrace();
 		}
-
-//		try {
-//		      FileWriter myWriter = new FileWriter("ACatalogo.txt");
-//		      myWriter.write(catalogo);
-//		      myWriter.close();
-//		      System.out.println("El catalogo esta escrito en el fichero");
-//		    } catch (IOException e) {
-//		      System.out.println("accion erronea");
-//		      e.printStackTrace();
-//		    }
 
 		/**
 		 * el write solo lo lee a traves de strings, no se puede con arraylist. hay que
@@ -261,33 +320,18 @@ public class Main {
 		 * bucle con for each for(Libro l :catalogo){ write(l._______()); }
 		 */
 
-//		 try {
-//		      File myObj = new File("ACatalogo.txt");
-//		      Scanner myReader = new Scanner(myObj);
-//		      while (myReader.hasNextLine()) {
-//		        String data = myReader.nextLine();
-//		        System.out.println(data);
-//		      }
-//		      myReader.close();
-//		    } catch (FileNotFoundException e) {
-//		      System.out.println("An error occurred.");
-//		      e.printStackTrace();
-//		    }
-//		 File myObj = new File("ACatalogo.txt");
-//		 if (myObj.exists()) {
-//		      System.out.println("File name: " + myObj.getName());
-//		      System.out.println("Absolute path: " + myObj.getAbsolutePath());
-//		      System.out.println("Writeable: " + myObj.canWrite());
-//		      System.out.println("Readable " + myObj.canRead());
-//		      System.out.println("File size in bytes " + myObj.length());
-//		    } else {
-//		      System.out.println("The file does not exist.");
-//		    }
+	}
 
-//		File archivoCatalogo = new File ("C:\\archivoCatalogo.txt");
-//		FileReader fr = new FileReader (archivoCatalogo);
-//		BufferedReader br = new BufferedReader(fr);
-//		String linea = br.readLine();
+	private static void cargarFichero(ArrayList<Libro> catalogo) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Como se llama el fichero que quieres cargar");
+		String nombreFichero = sc.next();
+		Scanner myReader = new Scanner(nombreFichero);
+		while (myReader.hasNextLine()) {
+			String data = myReader.nextLine();
+			System.out.println(data);
+		}
+		myReader.close();
 	}
 
 	private static void vaciarCatalogo(ArrayList<Libro> catalogo) {
@@ -295,19 +339,4 @@ public class Main {
 		System.out.println("Catalogo vacio");
 	}
 
-	private static Libro procesaEntrada(String entrada) {
-		Libro libro = null;
-
-		String[] datos = entrada.split(":");
-
-		String titulo = datos[0];
-		String isbn = datos[1];
-		Genero genero = Genero.getGenero(datos[2]);
-		String autor = datos[3];
-		Integer paginas = Integer.parseInt(datos[4]);
-
-		libro = new Libro(titulo, isbn, genero, autor, paginas);
-
-		return libro;
-	}
 }
