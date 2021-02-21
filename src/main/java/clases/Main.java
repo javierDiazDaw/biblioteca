@@ -28,7 +28,6 @@ public class Main {
 			switch (opcion) {
 			case 1:
 				alta(catalogo);
-
 				break;
 			case 2:
 				mostrarLibro(catalogo);
@@ -193,20 +192,18 @@ public class Main {
 
 	private static void mostrarLibro(ArrayList<Libro> catalogo) {
 
-		// Metodo For Each
-
 		for (int i = 0; i < catalogo.size(); i++) {
-			Libro libro = catalogo.get(i);
+			Libro l = catalogo.get(i);
 
 			System.out.println("Libro " + (i + 1));
-			System.out.println(libro.toString());
+			System.out.println(l.toString());
 		}
 
 		if (catalogo.size() == 0) {
 			System.out.println("El catalogo se encuentra vacio");
 		}
 
-		// Metodo bucle con size
+		// Metodo bucle 2 con size sin toString
 
 //		for (int i = 0; i < catalogo.size(); i++) {
 //			System.out.println("Libro " + (i + 1));
@@ -239,12 +236,10 @@ public class Main {
 		String isbn = "";
 		String titulo = "";
 
-//		System.out.println("Buscar por titulo o por ISBN");
-//		Scanner teclado = new Scanner(System.in);
-//		elegir = teclado.next();
-//		if (elegir.equals("isbn")) {
-//			System.out.println("Escribe el isbn del libro que desea buscar");
-//			isbn = teclado.next();
+//		
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("Escribe el isbn del libro que desea buscar");
+		isbn = teclado.next();
 
 		Libro l = new Libro();
 		l.setIsbn(isbn);
@@ -259,28 +254,9 @@ public class Main {
 		}
 
 	}
-//	}
-//		if (elegir.equals("titulo")) {
-//			System.out.println("Escribe el titulo del libro que desea buscar");
-//			titulo = teclado.next();
-//
-//			Libro l = new Libro();
-//			l.setTitulo(titulo);
-//
-//			int posicion = 0;
-//			posicion = catalogo.indexOf(l);
-//			if (posicion < 0) {
-//				System.out.println("El libro no esta agregado en el catalogo");
-//			} else {
-//				System.out.println("Libro encontrado");
-//				System.out.println(catalogo.get(posicion));
-//			}
-//		}
-//
-//	}
 
 	private static void ordenaLibro(ArrayList<Libro> catalogo) {
-		// TODO Auto-generated method stub
+
 		int elegir = 0;
 
 		do {
@@ -331,52 +307,100 @@ public class Main {
 	}
 
 	private static void leerFichero(ArrayList<Libro> catalogo) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Como se llama el fichero que quieres leer");
-		String nombreFichero = sc.next();
-		File fichero = new File(nombreFichero);
-		Scanner teclado = null;
+
+		Libro libro = null;
 
 		try {
-			// Leemos el contenido del fichero
-			System.out.println("comprobando fichero...");
-			teclado = new Scanner(fichero);
 
-			// Leemos linea a linea el fichero
+			System.out.println("Introduzca el nombre del archivo a leer");
+			Scanner sc = new Scanner(System.in);
+			String respuesta = sc.next();
+
+			File fichero = new File(respuesta);//
+			Scanner teclado = new Scanner(fichero);//
+
+			System.out.println("El fichero ha sido cargado.");
+
 			while (teclado.hasNextLine()) {
-				String linea = teclado.nextLine(); // Guardamos la linea en un String
-				System.out.println(linea); // Imprimimos la linea
 
-				Libro libro = new Libro();
+				String line = teclado.next();
+				String[] datos = line.split(",");
+
+				String titulo = datos[0];
+				String isbn = datos[1];
+				Genero genero = Genero.getGenero(datos[2]);
+				String autor = datos[3];
+				Integer paginas = Integer.parseInt(datos[4]);
+
+				libro = new Libro(datos[0], datos[1], genero, datos[3], paginas);
 				catalogo.add(libro);
-			}
 
-		} catch (Exception ex) {
-			System.out.println("Lo sentimos, el fichero no existe");
-		} finally {
-			// Cerramos el fichero tanto si la lectura ha sido correcta o no
-			try {
-				if (teclado != null)
-					teclado.close();
-			} catch (Exception ex2) {
-				System.out.println("Lo sentimos, el fichero no existe");
+				while (teclado.hasNextLine()) {
+					String data = teclado.nextLine();
+					System.out.println(data);
+				}
 			}
+			teclado.close();
+		} catch (Exception e) {
+			System.out.println("Lo sentimos, el fichero no existe");
+			e.printStackTrace();
 		}
+
+//		Libro libro = null;
+//
+//		System.out.println("Como se llama el fichero que quieres leer");
+//		Scanner sc = new Scanner(System.in);
+//		String nombreFichero = sc.next();
+//
+//		File fichero = new File(nombreFichero);
+//		Scanner teclado = null;
+//
+//		try {
+//			// Leemos el contenido del fichero
+//			System.out.println("comprobando fichero...");
+//			teclado = new Scanner(fichero);
+//
+//			// Leemos linea a linea el fichero
+//			while (teclado.hasNextLine()) {
+//
+//				String linea = teclado.next();
+//				
+//				String[] datos = linea.split(",");
+//				String titulo = datos[0];
+//				String isbn = datos[1];
+//				Genero genero = Genero.getGenero(datos[2]);
+//				String autor = datos[3];
+//				Integer paginas = Integer.parseInt(datos[4]);
+//
+//				libro = new Libro(titulo, isbn, genero, autor, paginas);
+//				catalogo.add(libro);
+//
+////				while (teclado.hasNextLine()) {
+////					String data = teclado.nextLine(); // Guardamos la linea en un String
+////					System.out.println(data); // Imprimimos la linea
+////				}
+//
+//			}
+//			teclado.close();
+//
+//		} catch (Exception ex) {
+//			System.out.println("Lo sentimos, el fichero no existe");
+//		} finally {
+//			// Cerramos el fichero tanto si la lectura ha sido correcta o no
+//			try {
+//				if (teclado != null)
+//					teclado.close();
+//			} catch (Exception ex2) {
+//				System.out.println("Lo sentimos, el fichero no existe");
+//			}
+//		}
 
 	}
 
-//	private static void leerFichero(ArrayList<Libro> catalogo) {
-//		Scanner sc = new Scanner(System.in);
-//		System.out.println("Como se llama el fichero que quieres leer");
-//		String nombreFichero = sc.next();
-//		File fichero = new File(nombreFichero);
-//		Scanner myReader = new Scanner(nombreFichero);
-//		while (myReader.hasNextLine()) {
-//			String data = myReader.nextLine();
-//			System.out.println(data);
-//		}
-//		myReader.close();
-//	}
+//	IT:9781231231234:novela:Stephen King:1300
+//	La isla del tesoro:9781869345867:ficcion:Pedro:200
+//	Platero y yo:9781276849034:poesia:Juan Ramon Jimenez:150
+//	
 
 	private static void vaciarCatalogo(ArrayList<Libro> catalogo) {
 		catalogo.clear();

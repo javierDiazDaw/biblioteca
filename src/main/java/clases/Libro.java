@@ -68,7 +68,7 @@ public class Libro implements Comparable<Libro> {
 				+ paginas + "\n";
 
 	}
-	
+
 	public String toStringFile() {
 		return "Titulo: " + titulo + ", ISBN: " + isbn + ", Genero: " + genero + ", Autor: " + autor + ", Paginas: "
 				+ paginas + "\n";
@@ -83,10 +83,7 @@ public class Libro implements Comparable<Libro> {
 			b = true;
 
 		} else {
-			
-//			if (this.titulo.equalsIgnoreCase(l.titulo)) {
-//				b = true;
-//			}
+
 			if (this.isbn.equalsIgnoreCase(l.isbn)) {
 				b = true;
 			}
@@ -101,14 +98,13 @@ public class Libro implements Comparable<Libro> {
 	public int compareTo(Libro o) {
 		return this.titulo.compareTo(o.titulo);
 	}
-	
-	
 
 }
+
 class compararPorIsbn implements Comparator<Libro> {
 
-    @Override
-    public int compare(Libro o1, Libro o2) {
-        return o1.getPaginas() - o2.getPaginas() ; 
-    }
+	@Override
+	public int compare(Libro o1, Libro o2) {
+		return o1.getPaginas() - o2.getPaginas();
+	}
 }
