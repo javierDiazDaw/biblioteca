@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.io.*;
 
 public class Main {
 
@@ -45,7 +46,7 @@ public class Main {
 				guardarFichero(catalogo);
 				break;
 			case 7:
-				cargarFichero(catalogo);
+				leerFichero(catalogo);
 				break;
 			case 8:
 				vaciarCatalogo(catalogo);
@@ -111,7 +112,7 @@ public class Main {
 		while (!validado) {
 			System.out.println("Introduce los datos de un libro.");
 			System.out.println("Usa el formato \"titulo:isbn:genero:autor:paginas\"");
-			System.out.println("El ISBN debe empezar por 978 o 979");
+			System.out.println("El ISBN debe contener 13 digitos y empieza por 978 o 979");
 			try {
 				datos = leerCadena();
 				if (true)// Supongo de momento que valida siempre
@@ -194,8 +195,15 @@ public class Main {
 
 		// Metodo For Each
 
-		for (Libro l : catalogo) {
-			System.out.println(l.toString());
+		for (int i = 0; i < catalogo.size(); i++) {
+			Libro libro = catalogo.get(i);
+
+			System.out.println("Libro " + (i + 1));
+			System.out.println(libro.toString());
+		}
+
+		if (catalogo.size() == 0) {
+			System.out.println("El catalogo se encuentra vacio");
 		}
 
 		// Metodo bucle con size
@@ -307,7 +315,7 @@ public class Main {
 				escribeFichero.write(l.toStringFile());
 
 			}
-			System.out.println("El catágolo se ha guardado en el fichero");
+			System.out.println("El catagolo se ha guardado en el fichero " + nombreFichero);
 			escribeFichero.close();
 		} catch (IOException e) {
 			System.out.println("Error en el fichero");
@@ -322,17 +330,53 @@ public class Main {
 
 	}
 
-	private static void cargarFichero(ArrayList<Libro> catalogo) {
+	private static void leerFichero(ArrayList<Libro> catalogo) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Como se llama el fichero que quieres cargar");
+		System.out.println("Como se llama el fichero que quieres leer");
 		String nombreFichero = sc.next();
-		Scanner myReader = new Scanner(nombreFichero);
-		while (myReader.hasNextLine()) {
-			String data = myReader.nextLine();
-			System.out.println(data);
+		File fichero = new File(nombreFichero);
+		Scanner teclado = null;
+
+		try {
+			// Leemos el contenido del fichero
+			System.out.println("comprobando fichero...");
+			teclado = new Scanner(fichero);
+
+			// Leemos linea a linea el fichero
+			while (teclado.hasNextLine()) {
+				String linea = teclado.nextLine(); // Guardamos la linea en un String
+				System.out.println(linea); // Imprimimos la linea
+
+				Libro libro = new Libro();
+				catalogo.add(libro);
+			}
+
+		} catch (Exception ex) {
+			System.out.println("Lo sentimos, el fichero no existe");
+		} finally {
+			// Cerramos el fichero tanto si la lectura ha sido correcta o no
+			try {
+				if (teclado != null)
+					teclado.close();
+			} catch (Exception ex2) {
+				System.out.println("Lo sentimos, el fichero no existe");
+			}
 		}
-		myReader.close();
+
 	}
+
+//	private static void leerFichero(ArrayList<Libro> catalogo) {
+//		Scanner sc = new Scanner(System.in);
+//		System.out.println("Como se llama el fichero que quieres leer");
+//		String nombreFichero = sc.next();
+//		File fichero = new File(nombreFichero);
+//		Scanner myReader = new Scanner(nombreFichero);
+//		while (myReader.hasNextLine()) {
+//			String data = myReader.nextLine();
+//			System.out.println(data);
+//		}
+//		myReader.close();
+//	}
 
 	private static void vaciarCatalogo(ArrayList<Libro> catalogo) {
 		catalogo.clear();

@@ -1,4 +1,0 @@
-Titulo: W, ISBN: 1234, Genero: NOVELA, Autor: King, Paginas: 12
-Titulo: Kong, ISBN: 1234, Genero: NOVELA, Autor: King, Paginas: 20
-Titulo: IT, ISBN: 1234, Genero: NOVELA, Autor: King, Paginas: 1234
-Titulo: AAA, ISBN: 1234, Genero: NOVELA, Autor: King, Paginas: 10000
