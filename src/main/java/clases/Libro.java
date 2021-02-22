@@ -2,7 +2,7 @@ package clases;
 
 import java.util.Comparator;
 
-public class Libro implements Comparable<Libro> {
+public class Libro implements Comparable<Libro>, Comparator<Libro> {
 
 	private String titulo;
 	private String isbn;
@@ -70,8 +70,7 @@ public class Libro implements Comparable<Libro> {
 	}
 
 	public String toStringFile() {
-		return "Titulo: " + titulo + ", ISBN: " + isbn + ", Genero: " + genero + ", Autor: " + autor + ", Paginas: "
-				+ paginas + "\n";
+		return titulo + "," + isbn + "," + genero + "," + autor + "," + paginas + "\n";
 	}
 
 	public boolean equals(Object o) {
@@ -99,12 +98,8 @@ public class Libro implements Comparable<Libro> {
 		return this.titulo.compareTo(o.titulo);
 	}
 
-}
-
-class compararPorIsbn implements Comparator<Libro> {
-
-	@Override
 	public int compare(Libro o1, Libro o2) {
 		return o1.getPaginas() - o2.getPaginas();
 	}
+
 }

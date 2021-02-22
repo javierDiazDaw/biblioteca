@@ -269,7 +269,7 @@ public class Main {
 				System.out.println("Catalogo ordenado por titulo");
 				System.out.println("Compruebelo en la seccion \"Lista de libros\"");
 			} else {
-				Collections.sort(catalogo, new compararPorIsbn());
+				Collections.sort(catalogo, new Libro());
 				System.out.println("Catalogo ordenado por numero de paginas");
 				System.out.println("Compruebelo en la seccion \"Lista de libros\"");
 			}
@@ -282,7 +282,7 @@ public class Main {
 		Scanner teclado = new Scanner(System.in);
 		String nombreFichero = "";
 
-		System.out.println("¿Como se llama el fichero a guardar?");
+		System.out.println("ï¿½Como se llama el fichero a guardar?");
 		nombreFichero = teclado.next();
 
 		try {
@@ -308,92 +308,87 @@ public class Main {
 
 	private static void leerFichero(ArrayList<Libro> catalogo) {
 
-		Libro libro = null;
-
-		try {
-
-			System.out.println("Introduzca el nombre del archivo a leer");
-			Scanner sc = new Scanner(System.in);
-			String respuesta = sc.next();
-
-			File fichero = new File(respuesta);//
-			Scanner teclado = new Scanner(fichero);//
-
-			System.out.println("El fichero ha sido cargado.");
-
-			while (teclado.hasNextLine()) {
-
-				String line = teclado.next();
-				String[] datos = line.split(",");
-
-				String titulo = datos[0];
-				String isbn = datos[1];
-				Genero genero = Genero.getGenero(datos[2]);
-				String autor = datos[3];
-				Integer paginas = Integer.parseInt(datos[4]);
-
-				libro = new Libro(datos[0], datos[1], genero, datos[3], paginas);
-				catalogo.add(libro);
-
-				while (teclado.hasNextLine()) {
-					String data = teclado.nextLine();
-					System.out.println(data);
-				}
-			}
-			teclado.close();
-		} catch (Exception e) {
-			System.out.println("Lo sentimos, el fichero no existe");
-			e.printStackTrace();
-		}
-
 //		Libro libro = null;
 //
-//		System.out.println("Como se llama el fichero que quieres leer");
-//		Scanner sc = new Scanner(System.in);
-//		String nombreFichero = sc.next();
-//
-//		File fichero = new File(nombreFichero);
-//		Scanner teclado = null;
-//
 //		try {
-//			// Leemos el contenido del fichero
-//			System.out.println("comprobando fichero...");
-//			teclado = new Scanner(fichero);
 //
-//			// Leemos linea a linea el fichero
+//			System.out.println("Introduzca el nombre del archivo a leer");
+//			Scanner sc = new Scanner(System.in);
+//			String respuesta = sc.next();
+//
+//			File fichero = new File(respuesta);//
+//			Scanner teclado = new Scanner(fichero);//
+//
+//			System.out.println("El fichero ha sido cargado.");
+//
 //			while (teclado.hasNextLine()) {
 //
-//				String linea = teclado.next();
-//				
-//				String[] datos = linea.split(",");
+//				String line = teclado.next();
+//				String[] datos = line.split(",");
+//
 //				String titulo = datos[0];
 //				String isbn = datos[1];
 //				Genero genero = Genero.getGenero(datos[2]);
 //				String autor = datos[3];
 //				Integer paginas = Integer.parseInt(datos[4]);
 //
-//				libro = new Libro(titulo, isbn, genero, autor, paginas);
+//				libro = new Libro(datos[0], datos[1], genero, datos[3], paginas);
 //				catalogo.add(libro);
 //
-////				while (teclado.hasNextLine()) {
-////					String data = teclado.nextLine(); // Guardamos la linea en un String
-////					System.out.println(data); // Imprimimos la linea
-////				}
-//
+//				while (teclado.hasNextLine()) {
+//					String data = teclado.nextLine();
+//					System.out.println(data);
+//				}
 //			}
 //			teclado.close();
-//
-//		} catch (Exception ex) {
+//		} catch (Exception e) {
 //			System.out.println("Lo sentimos, el fichero no existe");
-//		} finally {
-//			// Cerramos el fichero tanto si la lectura ha sido correcta o no
-//			try {
-//				if (teclado != null)
-//					teclado.close();
-//			} catch (Exception ex2) {
-//				System.out.println("Lo sentimos, el fichero no existe");
-//			}
+//			e.printStackTrace();
 //		}
+
+		Libro libro = null;
+
+		System.out.println("Como se llama el fichero que quieres leer");
+		Scanner sc = new Scanner(System.in);
+		String nombreFichero = sc.next();
+
+		File fichero = new File(nombreFichero);
+		Scanner teclado = null;
+
+		try {
+			
+			System.out.println("comprobando fichero...");
+			teclado = new Scanner(fichero);
+
+			
+			while (teclado.hasNextLine()) {
+
+				String linea = teclado.nextLine();
+
+				String[] datos = linea.split(",");
+				String titulo = datos[0];
+				String isbn = datos[1];
+				Genero genero = Genero.getGenero(datos[2]);
+				String autor = datos[3];
+				Integer paginas = Integer.parseInt(datos[4]);
+
+				libro = new Libro(titulo, isbn, genero, autor, paginas);
+				catalogo.add(libro);
+
+			}
+			teclado.close();
+
+		} catch (Exception ex) {
+			System.out.println("Lo sentimos, el fichero no existe");
+		} finally {
+			// Cerramos el fichero tanto si la lectura ha sido correcta o no
+			try {
+				if (teclado != null)
+					teclado.close();
+			} catch (Exception ex2) {
+				System.out.println("Lo sentimos, el fichero no existe");
+			}
+		}
 
 	}
 
