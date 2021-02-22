@@ -97,6 +97,8 @@ public class Libro implements Comparable<Libro>, Comparator<Libro> {
 	public int compareTo(Libro o) {
 		return this.titulo.compareTo(o.titulo);
 	}
+	
+	
 
 	public int compare(Libro o1, Libro o2) {
 		return o1.getPaginas() - o2.getPaginas();
