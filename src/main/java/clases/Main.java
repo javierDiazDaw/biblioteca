@@ -112,14 +112,14 @@ public class Main {
 			System.out.println("El ISBN debe contener 13 digitos y empieza por 978 o 979");
 			try {
 				datos = leerCadena();
-				if (true)// Supongo de momento que valida siempre
-					validado = true;
+				validado = true;
 			} catch (InputMismatchException e) {
 				System.out.println("Datos de entrada no validos");
 			}
 		}
 
 		return datos;
+
 	}
 
 	private static String leerCadena() {
@@ -137,25 +137,17 @@ public class Main {
 
 		String titulo = datos[0];
 		String isbn = datos[1];
-		validarISBN13(datos[1]);
 		Genero genero = Genero.getGenero(datos[2]);
-		validarGenero(datos[2]);
 		String autor = datos[3];
 		Integer paginas = Integer.parseInt(datos[4]);
-		validarPaginas(datos[4]);
+		validacion(datos[1], datos[2], datos[4]);
 
 		libro = new Libro(titulo, isbn, genero, autor, paginas);
 
 		return libro;
 	}
 
-	/**
-	 * Valida si una cadena es un ISBN de 13 digitos
-	 *
-	 * @param ISBN String que contiene el valor a validar
-	 * @return True = es un usuario de twitter
-	 */
-	public static void validarISBN13(String isbn) {
+	public static void validacion(String isbn, String genero, String paginas) {
 
 		if (isbn.matches("^(978|979)[0-9]{10}$") != true) {
 			System.out.println("ISBN incorrecto");
@@ -164,20 +156,12 @@ public class Main {
 			System.out.println("ISBN correcto");
 		}
 
-	}
-
-	public static void validarGenero(String genero) {
-
 		if (genero.matches("^(novela|NOVELA|poesia|POESIA|ficcion|FICCION)$") != true) {
 			System.out.println("genero incorrecto");
 		} else {
 			genero.matches("^(novela|NOVELA|poesia|POESIA|ficcion|FICCION)$");
 			System.out.println("genero correcto");
 		}
-
-	}
-
-	public static void validarPaginas(String paginas) {
 
 		if (paginas.matches("^[0-9]+$") != true) {
 			System.out.println("paginas incorrectas");
@@ -215,6 +199,7 @@ public class Main {
 
 	}
 
+//		Libros de ejemplo
 //		IT:9781231231234:novela:Stephen King:1300
 //		La isla del tesoro:9781869345867:ficcion:Pedro:200
 //		Platero y yo:9781276849034:poesia:Juan Ramon Jimenez:150
@@ -233,7 +218,6 @@ public class Main {
 		String elegir;
 		String isbn = "";
 
-//		
 		Scanner teclado = new Scanner(System.in);
 		System.out.println("Escribe el isbn del libro que desea buscar");
 		isbn = teclado.next();
@@ -295,12 +279,6 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		/**
-		 * el write solo lo lee a traves de strings, no se puede con arraylist. hay que
-		 * crear toString para devolverme un libro en cada cadena. se debe crerar un
-		 * bucle con for each for(Libro l :catalogo){ write(l._______()); }
-		 */
-
 	}
 
 	private static void leerFichero(ArrayList<Libro> catalogo) {
@@ -339,7 +317,7 @@ public class Main {
 		} catch (Exception ex) {
 			System.out.println("Lo sentimos, el fichero no existe");
 		} finally {
-			// Cerramos el fichero tanto si la lectura ha sido correcta o no
+
 			try {
 				if (teclado != null)
 					teclado.close();
@@ -349,11 +327,6 @@ public class Main {
 		}
 
 	}
-
-//	IT:9781231231234:novela:Stephen King:1300
-//	La isla del tesoro:9781869345867:ficcion:Pedro:200
-//	Platero y yo:9781276849034:poesia:Juan Ramon Jimenez:150
-//	
 
 	private static void vaciarCatalogo(ArrayList<Libro> catalogo) {
 		catalogo.clear();
