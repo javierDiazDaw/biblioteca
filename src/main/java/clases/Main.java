@@ -90,7 +90,11 @@ public class Main {
 
 		return opcion;
 	}
-
+	
+	/**
+	 * Metodo alta que crea catalogo de libros
+	 * @param catalogo
+	 */
 	private static void alta(ArrayList<Libro> catalogo) {
 		// Leer de la entrada
 		String datosLibro = obtenerDatosLibro();
@@ -102,6 +106,10 @@ public class Main {
 		// Meter el libro en el catalogo
 	}
 
+	/**
+	 * Pide datos del libro
+	 * @return datos del libro
+	 */
 	private static String obtenerDatosLibro() {
 		String datos = null;
 
@@ -122,6 +130,10 @@ public class Main {
 
 	}
 
+	/**
+	 * Lee la cadena de los datos mediente Scanner
+	 * @return opcion
+	 */
 	private static String leerCadena() {
 		String opcion = null;
 		Scanner teclado = new Scanner(System.in);
@@ -147,6 +159,12 @@ public class Main {
 		return libro;
 	}
 
+	/**
+	 * validacion de los datos introducidos mediante expresiones regulares
+	 * @param isbn
+	 * @param genero
+	 * @param paginas
+	 */
 	public static void validacion(String isbn, String genero, String paginas) {
 
 		if (isbn.matches("^(978|979)[0-9]{10}$") != true) {
@@ -172,6 +190,10 @@ public class Main {
 
 	}
 
+	/**
+	 * Muestra catalogo en forma de lista con size
+	 * @param catalogo
+	 */
 	private static void mostrarLibro(ArrayList<Libro> catalogo) {
 
 		for (int i = 0; i < catalogo.size(); i++) {
@@ -205,6 +227,10 @@ public class Main {
 //		Platero y yo:9781276849034:poesia:Juan Ramon Jimenez:150
 //		
 
+	/**
+	 * Elimina libro de la lista mediante uso de remove
+	 * @param catalogo
+	 */
 	private static void eliminarLibro(ArrayList<Libro> catalogo) {
 
 		System.out.println("Escribe el titulo del libro que desea eliminar");
@@ -214,6 +240,10 @@ public class Main {
 
 	}
 
+	/**
+	 * Se busca el libro de la lista con isbn
+	 * @param catalogo
+	 */
 	private static void busquedaLibro(ArrayList<Libro> catalogo) {
 		String elegir;
 		String isbn = "";
@@ -225,6 +255,10 @@ public class Main {
 		Libro l = new Libro();
 		l.setIsbn(isbn);
 
+		/**
+		 * devuelve el índice, dentro del String comenzando la búsqueda desde indice; 
+		 * o -1 si no se encuentra dicho valor.
+		 */
 		int posicion = 0;
 		posicion = catalogo.indexOf(l);
 		if (posicion < 0) {
@@ -236,6 +270,10 @@ public class Main {
 
 	}
 
+	/**
+	 * Ordena el libro eligiendo al usuario por titulo o por paginas
+	 * @param catalogo
+	 */
 	private static void ordenaLibro(ArrayList<Libro> catalogo) {
 
 		int elegir = 0;
@@ -246,10 +284,17 @@ public class Main {
 			elegir = teclado.nextInt();
 
 			if (elegir == 1) {
+				
+				/**
+				 * Ordena libro por titulo
+				 */
 				Collections.sort(catalogo);
 				System.out.println("Catalogo ordenado por titulo");
 				System.out.println("Compruebelo en la seccion \"Lista de libros\"");
 			} else {
+				/**
+				 * Ordena libro por paginas
+				 */
 				Collections.sort(catalogo, new Libro());
 				System.out.println("Catalogo ordenado por numero de paginas");
 				System.out.println("Compruebelo en la seccion \"Lista de libros\"");
@@ -258,6 +303,11 @@ public class Main {
 
 	}
 
+	/**
+	 * Se guarda el fichero creando uno nuevo mediante Filewriter y write
+	 * @param catalogo
+	 * @throws IOException
+	 */
 	private static void guardarFichero(ArrayList<Libro> catalogo) throws IOException {
 
 		Scanner teclado = new Scanner(System.in);
@@ -281,6 +331,11 @@ public class Main {
 
 	}
 
+	/**
+	 * Se lee el fichero creado anteriormente pidiendo el nombre
+	 * y cortando la cadena mediante el metodo split
+	 * @param catalogo
+	 */
 	private static void leerFichero(ArrayList<Libro> catalogo) {
 
 		Libro libro = null;
@@ -328,6 +383,10 @@ public class Main {
 
 	}
 
+	/**
+	 * Vacia el catalogo con clear
+	 * @param catalogo
+	 */
 	private static void vaciarCatalogo(ArrayList<Libro> catalogo) {
 		catalogo.clear();
 		System.out.println("Catalogo vacio");

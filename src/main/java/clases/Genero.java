@@ -6,6 +6,9 @@ public enum Genero {
 	public static Genero getGenero(String genero) {
 		Genero seleccionado = null;
 
+		/**
+		* Uso de Switch para el registro entre estos tres tipos
+		 */
 		switch (genero.toUpperCase()) {
 		case "NOVELA":
 			seleccionado = Genero.NOVELA;
